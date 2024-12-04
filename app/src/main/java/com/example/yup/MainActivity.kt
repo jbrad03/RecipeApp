@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val apiKey = "7ae960dfb79d4fb98d611848761f6657" // Replace with your Spoonacular API Key
+    private val apiKey = "d939f2c08bac4bf5bb61dfad068c23ca" // Replace with your Spoonacular API Key
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +31,17 @@ class MainActivity : AppCompatActivity() {
     private fun fetchRecipes(ingredients: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val recipes = RetrofitInstance.api.getRecipes(ingredients, 10, apiKey)
+                val recipes = RetrofitInstance.api.getRecipes(ingredients, 10, 1, apiKey)
                 runOnUiThread {
                     val intent = Intent(this@MainActivity, ResultsActivity::class.java)
                     intent.putParcelableArrayListExtra("recipes", ArrayList(recipes))
                     startActivity(intent)
                 }
             } catch (e: Exception) {
-                // Log the exception for debugging
-                runOnUiThread {
-                    Toast.makeText(this@MainActivity, "Error Fetching Recipes", Toast.LENGTH_SHORT).show()
-                }
                 e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Error Fetching Recipes: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
