@@ -13,9 +13,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
-
+//test
     private lateinit var binding: ActivityMainBinding
-    private val apiKey = "YOUR_SPOONACULAR_API_KEY"
+    private val apiKey = "7ae960dfb79d4fb98d611848761f6657"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

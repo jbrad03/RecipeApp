@@ -1,6 +1,6 @@
 package com.example.spoonacularapp.api
 
-import com.example.spoonacularapp.models.Recipe
+import com.example.yup.Recipe
 import retrofit2.http.GET
 import retrofit2.http.Query
 
