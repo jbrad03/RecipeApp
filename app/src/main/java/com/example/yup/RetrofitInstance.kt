@@ -1,4 +1,4 @@
-package com.example.spoonacularapp.network
+package com.example.yup
 
 import com.example.spoonacularapp.api.SpoonacularApi
 import retrofit2.Retrofit

@@ -6,8 +6,9 @@ import retrofit2.http.Query
 
 interface SpoonacularApi {
     @GET("recipes/findByIngredients")
-    suspend fun getRecipesByIngredients(
+    suspend fun getRecipes(
         @Query("ingredients") ingredients: String,
+        @Query("number") number: Int,
         @Query("apiKey") apiKey: String
     ): List<Recipe>
 }

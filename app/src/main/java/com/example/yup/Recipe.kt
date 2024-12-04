@@ -6,6 +6,5 @@ import kotlinx.parcelize.Parcelize
 data class Recipe(
     val id: Int,
     val title: String,
-    val image: String,
-    val imageType: String
+    val image: String
 ) : Parcelable
