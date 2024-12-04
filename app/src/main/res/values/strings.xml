@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">yup</string>
+    <string name="home_button">Home Button</string>
+    <string name="favorite_button">Favorite Button</string>
+    <string name="enter_ingredients">Enter Ingredients</string>
+    <string name="add_ingredients">Add Ingredients</string>
+    <string name="recipes">Recipes</string>
 </resources>

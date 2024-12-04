@@ -1,21 +1,17 @@
 package com.example.yup
 
-import com.google.gson.Gson
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.spoonacularapp.network.RetrofitInstance
 import com.example.yup.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
-//testing
     private lateinit var binding: ActivityMainBinding
-    private val apiKey = "7ae960dfb79d4fb98d611848761f6657"
+    private val apiKey = "7ae960dfb79d4fb98d611848761f6657" // Replace with your Spoonacular API Key
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,32 +20,31 @@ class MainActivity : AppCompatActivity() {
 
         binding.searchButton.setOnClickListener {
             val ingredients = binding.ingredientsInput.text.toString()
-            if (ingredients.isBlank()) {
+            if (ingredients.isNotBlank()) {
+                fetchRecipes(ingredients)
+            } else {
                 Toast.makeText(this, "Please enter ingredients", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
             }
-            fetchRecipes(ingredients)
         }
     }
 
     private fun fetchRecipes(ingredients: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val recipes = RetrofitInstance.api.getRecipesByIngredients(ingredients, apiKey)
-                withContext(Dispatchers.Main) {
-                    val gson = Gson()
-                    val recipesJson = gson.toJson(recipes) // Convert list to JSON string
-
+                val recipes = RetrofitInstance.api.getRecipes(ingredients, 10, apiKey)
+                runOnUiThread {
                     val intent = Intent(this@MainActivity, ResultsActivity::class.java)
-                    intent.putExtra("recipes_json", recipesJson) // Pass JSON string
+                    intent.putParcelableArrayListExtra("recipes", ArrayList(recipes))
                     startActivity(intent)
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, "Error fetching recipes", Toast.LENGTH_SHORT)
-                        .show()
+                // Log the exception for debugging
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Error Fetching Recipes", Toast.LENGTH_SHORT).show()
                 }
+                e.printStackTrace()
             }
         }
     }
+
 }
