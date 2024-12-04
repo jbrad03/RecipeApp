@@ -1,5 +1,6 @@
 package com.example.yup
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,10 @@ class ResultsActivity : AppCompatActivity() {
         val recipes = intent.getParcelableArrayListExtra<Recipe>("recipes") ?: emptyList()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = RecipeAdapter(recipes)
+        binding.recyclerView.adapter = RecipeAdapter(recipes) { recipe ->
+            val intent = Intent(this, RecipeDetailsActivity::class.java)
+            intent.putExtra("recipe", recipe)
+            startActivity(intent)
+        }
     }
 }
